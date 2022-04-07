@@ -41,7 +41,8 @@ final class BookFactory extends ModelFactory
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'name' => self::faker()->text(),
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->datetime()),
-            'authors' => AuthorFactory::randomRange(1, 2)
+            'authors' => AuthorFactory::randomRange(1, 2),
+            'library' => LibraryFactory::random(),
         ];
     }
 

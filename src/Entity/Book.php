@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ApiResource]
+#[ApiResource(
+    uriTemplate: '/authors/{id}/books',
+    uriVariables: [
+        'id' => new Link(
+            fromClass: Author::class,
+            toProperty: 'authors',
+        )
+    ],
+    operations: [new GetCollection()]
+)]
+#[ApiResource(
+    uriTemplate: '/libraries/{id}/books',
+    uriVariables: [
+        'id' => new Link(
+            fromClass: Library::class,
+            toProperty: 'library',
+        )
+    ],
+    operations: [new GetCollection()]
+)]
 class Book
 {
     #[ORM\Id]
@@ -25,6 +48,9 @@ class Book
 
     #[ORM\ManyToMany(targetEntity: Author::class, mappedBy: 'books')]
     private $authors;
+
+    #[ORM\ManyToOne(targetEntity: Library::class, inversedBy: 'books')]
+    private $library;
 
     public function __construct()
     {
@@ -84,6 +110,18 @@ class Book
         if ($this->authors->removeElement($author)) {
             $author->removeBook($this);
         }
+
+        return $this;
+    }
+
+    public function getLibrary(): ?Library
+    {
+        return $this->library;
+    }
+
+    public function setLibrary(?Library $library): self
+    {
+        $this->library = $library;
 
         return $this;
     }

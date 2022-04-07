@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\AuthorRepository;
+use App\Repository\LibraryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AuthorRepository::class)]
+#[ORM\Entity(repositoryClass: LibraryRepository::class)]
 #[ApiResource]
-class Author
+class Library
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,12 +18,9 @@ class Author
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $firstName;
+    private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $lastName;
-
-    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'authors')]
+    #[ORM\OneToMany(mappedBy: 'library', targetEntity: Book::class)]
     private $books;
 
     public function __construct()
@@ -36,26 +33,14 @@ class Author
         return $this->id;
     }
 
-    public function getFirstName(): ?string
+    public function getName(): ?string
     {
-        return $this->firstName;
+        return $this->name;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setName(string $name): self
     {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
+        $this->name = $name;
 
         return $this;
     }
@@ -72,6 +57,7 @@ class Author
     {
         if (!$this->books->contains($book)) {
             $this->books[] = $book;
+            $book->setLibrary($this);
         }
 
         return $this;
@@ -79,7 +65,12 @@ class Author
 
     public function removeBook(Book $book): self
     {
-        $this->books->removeElement($book);
+        if ($this->books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getLibrary() === $this) {
+                $book->setLibrary(null);
+            }
+        }
 
         return $this;
     }
