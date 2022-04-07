@@ -2,6 +2,15 @@
 
 ## Setup
 
+### Configure your database user and password
+
+```dotenv
+#.env.local
+DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/api_platform?serverVersion=13&charset=utf8"
+```
+
+### Install the project
+
 ```bash
 composer install
 bin/console doctrine:database:create
