@@ -26,4 +26,4 @@ symfony serve -d
 
 ## API swagger
 
-@see https:localhost:8000/api
+[https://localhost:8000/api](https://localhost:8000/api)
