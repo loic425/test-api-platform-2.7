@@ -1,0 +1,18 @@
+{
+    "@context": "/api/contexts/Library",
+    "@id": "/api/libraries",
+    "@type": "hydra:Collection",
+    "hydra:member": [
+        {
+            "@id": "@string@.startsWith('/api/libraries/')",
+            "@type": "Library",
+            "id": @integer@,
+            "name": "Library thematic",
+            "books": [
+                "@string@.startsWith('/api/books/')",
+                "@string@.startsWith('/api/books/')"
+            ]
+        }
+    ],
+    "hydra:totalItems": 1
+}

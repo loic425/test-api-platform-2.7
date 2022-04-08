@@ -1,0 +1,11 @@
+{
+    "@context": "/api/contexts/Library",
+    "@id": "@string@.startsWith('/api/libraries/')",
+    "@type": "Library",
+    "id": @integer@,
+    "name": "Library thematic",
+    "books": [
+        "@string@.startsWith('/api/books/')",
+        "@string@.startsWith('/api/books/')"
+    ]
+}
