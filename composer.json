@@ -33,6 +33,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "lchrusciel/api-test-case": "^5.2",
         "symfony/maker-bundle": "^1.38",
         "zenstruck/foundry": "^1.17"
     },

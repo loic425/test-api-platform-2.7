@@ -1,0 +1,30 @@
+{
+    "@context": "/api/contexts/Book",
+    "@id": "@string@.startsWith('/api/libraries/').endsWith('/books')",
+    "@type": "hydra:Collection",
+    "hydra:member": [
+        {
+            "@id": "@string@.startsWith('/api/books/')",
+            "@type": "Book",
+            "id": @integer@,
+            "name": "Shinning",
+            "createdAt": "@string@.isDateTime()",
+            "authors": [
+                "@string@.startsWith('/api/authors/')"
+            ],
+            "library": "@string@.startsWith('/api/libraries/')"
+        },
+        {
+            "@id": "@string@.startsWith('/api/books/')",
+            "@type": "Book",
+            "id": @integer@,
+            "name": "When you see me",
+            "createdAt": "@string@.isDateTime()",
+            "authors": [
+                "@string@.startsWith('/api/authors/')"
+            ],
+            "library": "@string@.startsWith('/api/libraries/')"
+        }
+    ],
+    "hydra:totalItems": 2
+}

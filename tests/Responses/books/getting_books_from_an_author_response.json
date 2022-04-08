@@ -1,0 +1,19 @@
+{
+    "@context": "/api/contexts/Book",
+    "@id": "@string@.startsWith('/api/authors/').endsWith('/books')",
+    "@type": "hydra:Collection",
+    "hydra:member": [
+        {
+            "@id": "@string@.startsWith('/api/books/')",
+            "@type": "Book",
+            "id": @integer@,
+            "name": "Shinning",
+            "createdAt": "@string@.isDateTime()",
+            "authors": [
+                "@string@.startsWith('/api/authors/')"
+            ],
+            "library": "@string@.startsWith('/api/libraries/')"
+        }
+    ],
+    "hydra:totalItems": 1
+}

@@ -1,0 +1,12 @@
+{
+    "@context": "/api/contexts/Book",
+    "@id": "@string@.startsWith('/api/books/')",
+    "@type": "Book",
+    "id": @integer@,
+    "name": "Shinning",
+    "createdAt": "@string@.isDateTime()",
+    "authors": [
+        "@string@.startsWith('/api/authors/')"
+    ],
+    "library": "@string@.startsWith('/api/libraries/')"
+}
