@@ -60,4 +60,25 @@ final class BookApiTest extends JsonApiTestCase
         $response = $this->client->getResponse();
         $this->assertResponse($response, 'books/getting_books_from_a_library_response');
     }
+
+    /** @test */
+    public function it_allows_adding_books_to_a_library(): void
+    {
+        TestLibraryStory::load();
+
+        $library = LibraryFactory::find(['name' => 'Library thematic']);
+
+        $data =
+            <<<EOT
+        {
+            "name": "Carrie"
+        }
+EOT;
+
+        $this->client->request('POST', '/api/libraries/'.$library->getId().'/books', [], [], [
+            'CONTENT_TYPE' => 'application/ld+json',
+        ], $data);
+        $response = $this->client->getResponse();
+        $this->assertResponse($response, 'books/adding_books_to_a_library_response');
+    }
 }
